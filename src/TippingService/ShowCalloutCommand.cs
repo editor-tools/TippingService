@@ -1,17 +1,14 @@
 ﻿using System;
 using System.ComponentModel.Design;
-using System.Globalization;
-using System.Threading;
-using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using Microsoft;
 using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Shell.Interop;
 using Task = System.Threading.Tasks.Task;
 
 namespace TippingService
 {
-    /// <summary>
-    /// Command handler
-    /// </summary>
     internal sealed class ShowCalloutCommand
     {
         /// <summary>
@@ -37,6 +34,7 @@ namespace TippingService
         /// <param name="commandService">Command service to add command to, not null.</param>
         private ShowCalloutCommand(AsyncPackage package, OleMenuCommandService commandService)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             this.package = package ?? throw new ArgumentNullException(nameof(package));
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
 
@@ -54,16 +52,7 @@ namespace TippingService
             private set;
         }
 
-        /// <summary>
-        /// Gets the service provider from the owner package.
-        /// </summary>
-        private Microsoft.VisualStudio.Shell.IAsyncServiceProvider ServiceProvider
-        {
-            get
-            {
-                return this.package;
-            }
-        }
+        IServiceProvider ServiceProvider => package;
 
         /// <summary>
         /// Initializes the singleton instance of the command.
@@ -89,17 +78,37 @@ namespace TippingService
         private void Execute(object sender, EventArgs e)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
-            string message = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.GetType().FullName);
-            string title = "ShowCalloutCommand";
 
-            // Show a message box to prove we were here
-            VsShellUtilities.ShowMessageBox(
-                this.package,
-                message,
-                title,
-                OLEMSGICON.OLEMSGICON_INFO,
-                OLEMSGBUTTON.OLEMSGBUTTON_OK,
-                OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+            ShowCallout(ServiceProvider);
+        }
+
+        [STAThread]
+        static void ShowCallout(IServiceProvider serviceProvider)
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
+            var tippingService = new TippingService(serviceProvider);
+
+            var clientId = new Guid("D5D3B674-05BB-4942-B8EC-C3D13B5BD6EE");
+            var calloutId = new Guid("63b813cd-9292-4c0f-aa49-ebd888b791f8");
+            var statusBar = FindSccStatusBarHost();
+
+            var dte = serviceProvider.GetService(typeof(EnvDTE.DTE)) as EnvDTE.DTE;
+            Assumes.Present(dte);
+            var command = dte.Commands.Item("View.URL");
+            var commandGuid = new Guid(command.Guid);
+            var commandID = (uint)command.ID;
+            var commandOptions = "http://testdriven.net";
+
+            tippingService.RequestCalloutDisplay(clientId, calloutId, "foo", "bar", true, statusBar,
+                commandGuid, commandID, commandOptions);
+        }
+
+        static ContentControl FindSccStatusBarHost()
+        {
+            var StatusBarPartName = "PART_SccStatusBarHost";
+            var mainWindow = Application.Current.MainWindow;
+            return mainWindow?.Template?.FindName(StatusBarPartName, mainWindow) as ContentControl;
         }
     }
 }
