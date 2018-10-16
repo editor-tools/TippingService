@@ -37,6 +37,3 @@ using Xunit;
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 [assembly: TestFramework("Xunit.VsTestFramework", "VsixTesting.Xunit")]
-
-// Use regular Visual Studio instance instead of Exp
-[assembly: VsTestSettings(RootSuffix = "")]
