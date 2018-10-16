@@ -39,4 +39,4 @@ using Xunit;
 [assembly: TestFramework("Xunit.VsTestFramework", "VsixTesting.Xunit")]
 
 // Use regular Visual Studio instance instead of Exp
-[assembly: VsTestSettings(RootSuffix = "\"\"")]
+[assembly: VsTestSettings(RootSuffix = "")]
