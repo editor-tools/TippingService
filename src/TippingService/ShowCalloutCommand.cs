@@ -87,7 +87,7 @@ namespace TippingService
         {
             ThreadHelper.ThrowIfNotOnUIThread();
 
-            var tippingService = new TippingService(serviceProvider);
+            var tippingService = new VsTippingService(serviceProvider);
 
             var clientId = new Guid("D5D3B674-05BB-4942-B8EC-C3D13B5BD6EE");
             var calloutId = new Guid("63b813cd-9292-4c0f-aa49-ebd888b791f8");

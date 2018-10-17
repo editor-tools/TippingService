@@ -10,12 +10,12 @@ using Microsoft.VisualStudio.Shell;
 namespace TippingService
 {
     [Export]
-    public class TippingService
+    public class VsTippingService
     {
         readonly IServiceProvider serviceProvider;
 
         [ImportingConstructor]
-        public TippingService([Import(typeof(SVsServiceProvider))] IServiceProvider serviceProvider)
+        public VsTippingService([Import(typeof(SVsServiceProvider))] IServiceProvider serviceProvider)
         {
             this.serviceProvider = serviceProvider;
         }
