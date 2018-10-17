@@ -5,4 +5,4 @@ build_script:
 - msbuild /p:configuration=Release /p:DeployExtension=false /p:ZipPackageCompressionLevel=normal /v:m
 
 test_script:
-- msbuild /t:test
+- vstest.console /logger:Appveyor test\TippingService.IntegrationTests\bin\Release\TippingService.IntegrationTests.dll
