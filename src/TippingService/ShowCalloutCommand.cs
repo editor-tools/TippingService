@@ -2,7 +2,6 @@
 using System.ComponentModel.Design;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using Microsoft;
 using Microsoft.VisualStudio.Shell;
 using Task = System.Threading.Tasks.Task;
@@ -98,10 +97,9 @@ namespace TippingService
             var command = dte.Commands.Item("View.URL");
             var commandGuid = new Guid(command.Guid);
             var commandID = (uint)command.ID;
-            var commandOptions = "http://testdriven.net";
 
             tippingService.RequestCalloutDisplay(clientId, calloutId, "foo", "bar", true, statusBar,
-                commandGuid, commandID, commandOptions);
+                commandGuid, commandID);
         }
 
         static ContentControl FindSccStatusBarHost()

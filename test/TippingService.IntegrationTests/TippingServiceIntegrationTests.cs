@@ -26,13 +26,12 @@ public class TippingServiceIntegrationTests
             var command = dte.Commands.Item("View.URL");
             var commandGuid = new Guid(command.Guid);
             var commandID = (uint)command.ID;
-            var commandOptions = "http://github.com/github/VisualStudio";
             var target = new VsTippingService(serviceProvider);
 
             var ex = Record.Exception(() =>
             {
                 target.RequestCalloutDisplay(clientId, calloutId, title, message,
-                    isDismissable, statusBar, commandGuid, commandID, commandOptions);
+                    isDismissable, statusBar, commandGuid, commandID);
             });
 
             Assert.Null(ex);
