@@ -43,7 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="VsixTesting.Xunit">
-      <Version>0.1.37-beta-gfd7371388b</Version>
+      <Version>0.1.37-beta</Version>
     </PackageReference>
     <PackageReference Include="xunit" Version="2.3.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
