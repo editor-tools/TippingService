@@ -88,7 +88,6 @@ namespace TippingService
 
             var tippingService = new VsTippingService(serviceProvider);
 
-            var clientId = new Guid("D5D3B674-05BB-4942-B8EC-C3D13B5BD6EE");
             var calloutId = new Guid("63b813cd-9292-4c0f-aa49-ebd888b791f8");
             var statusBar = FindSccStatusBarHost();
 
@@ -98,7 +97,7 @@ namespace TippingService
             var commandGuid = new Guid(command.Guid);
             var commandID = (uint)command.ID;
 
-            tippingService.RequestCalloutDisplay(clientId, calloutId, "foo", "bar", true, statusBar,
+            tippingService.RequestCalloutDisplay(calloutId, "foo", "bar", true, statusBar,
                 commandGuid, commandID);
         }
 

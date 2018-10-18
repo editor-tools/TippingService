@@ -14,8 +14,7 @@ public class TippingServiceIntegrationTests
         [VsFact(UIThread = true)]
         public void Does_Not_Throw()
         {
-            var clientId = new Guid("D5D3B674-05BB-4942-B8EC-C3D13B5BD6EE");
-            var calloutId = new Guid("63b813cd-9292-4c0f-aa49-ebd888b791f8");
+            var calloutId = new Guid("63b813cd-9292-4c0f-aa49-ebd888b791f9");
             var title = "Hello";
             var message = "Hello, World!";
             var isDismissable = true;
@@ -30,7 +29,7 @@ public class TippingServiceIntegrationTests
 
             var ex = Record.Exception(() =>
             {
-                target.RequestCalloutDisplay(clientId, calloutId, title, message,
+                target.RequestCalloutDisplay(calloutId, title, message,
                     isDismissable, statusBar, commandGuid, commandID);
             });
 

@@ -55,6 +55,7 @@
     <DeployExtension>False</DeployExtension>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="IVsTippingService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShowCalloutCommand.cs" />
     <Compile Include="ShowCalloutCommandPackage.cs" />
